@@ -8,8 +8,6 @@ with st.sidebar:
 
 st.title("Audio Story generator") 
 
-
-
 if prompt := st.button("Generate"):
 
     if not openai_api_key:
