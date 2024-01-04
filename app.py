@@ -21,4 +21,12 @@ if prompt := st.button("Generate"):
     msg.append({"role": "user", "content": "Write a story no more than 500 words"})
     response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=msg)
     msg = response.choices[0].message
-    st.chat_message("assistant").write(msg.content)
+    text = msg
+
+    embeddings_dataset = st.session_state.cache['EMBED']
+    synthesiser = st.session_state.cache['AUDIO_PIPE']
+    speaker_embedding = torch.tensor(embeddings_dataset[7306]["xvector"]).unsqueeze(0)
+    
+    speech = synthesiser(text, forward_params={"speaker_embeddings": speaker_embedding})
+    # st.write(speech)
+    st.audio(speech['audio'], sample_rate = speech['sampling_rate'])
