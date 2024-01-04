@@ -11,7 +11,7 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
 for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+    st.chat_message(msg["role"]).write('Story is being generated')
 if prompt := st.button("Generate"):
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
