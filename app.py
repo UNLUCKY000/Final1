@@ -8,19 +8,20 @@ with st.sidebar:
 
 st.title("Audio Story generator") 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "I can give you audio story"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "Story is being generated"}]
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write('Story is being generated')
+
+
 if prompt := st.button("Generate"):
+
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
-
+    msg =  st.session_state["messages"] #"Write a story no more than 500 words"
+    st.chat_message(msg["role"]).write(msg['content'])
     openai.api_key = openai_api_key
-    st.session_state.messages.append({"role": "user", "content": "Write a story no more than 500 words"})
-    #st.chat_message("user").write(prompt)
-    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+    msg.append({"role": "user", "content": "Write a story no more than 500 words"})
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=msg)
     msg = response.choices[0].message
-    st.session_state.messages.append(msg)
     st.chat_message("assistant").write(msg.content)
+
