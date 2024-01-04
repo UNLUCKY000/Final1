@@ -8,7 +8,7 @@ with st.sidebar:
 
 st.title("Audio Story generator") 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "I can give you audio story"}]
 
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write('Story is being generated')
