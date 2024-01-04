@@ -8,10 +8,6 @@ with st.sidebar:
 
 st.title("Audio Story generator") 
 
-
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
-
 if prompt := st.button("Generate"):
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
